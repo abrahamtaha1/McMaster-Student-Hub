@@ -1,0 +1,22 @@
+{
+  "name": "student-tools",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel serve index.html",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "browserslist": [
+    "last 1 Chrome version"
+  ],
+  "dependencies": {
+    "pdfjs-dist": "2.5.207",
+    "regenerator-runtime": "0.13.7"
+  },
+  "devDependencies": {
+    "parcel": "^1.12.4"
+  }
+}
