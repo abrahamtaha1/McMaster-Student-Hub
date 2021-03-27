@@ -5,8 +5,12 @@
   "main": "index.js",
   "scripts": {
     "start": "concurrently npm:start:frontend npm:start:backend",
+    "install:all": "concurrently npm:install:frontend npm:install:backend npm:install:root",
     "start:frontend": "cd frontend && npm start",
     "start:backend": "cd backend && npm start",
+    "install:frontend": "cd frontend && npm i",
+    "install:backend": "cd backend && npm i",
+    "install:root": "npm i",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
