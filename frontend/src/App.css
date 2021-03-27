@@ -1,0 +1,58 @@
+.App {
+	text-align: center;
+}
+
+li {
+	list-style-type: none;
+	margin: 0 2vw;
+	font-size: 3vh;
+	font-family: monospace;
+	padding: 2vw;
+	color: black;
+	font-size: 1rem
+}
+
+li:hover {
+	background-color: #C6E9FF;
+}
+
+a {
+	text-decoration: none;
+}
+
+nav {
+	width: 100vw;
+	background-color: #D6EFFF;
+}
+
+ul {
+	margin: 0;
+	padding: 0;
+	display: flex;
+}
+
+body {
+	margin: 0;
+}
+
+@media only screen and (max-width: 500px) {
+	ul {
+		flex-direction: column;
+	}
+
+	li {
+		margin: 0;
+	}
+	a {
+		display: block;
+	}
+	button {
+		display: block;
+		padding: 2vw;
+		font-size: 3vh;
+		background-color: #AFE0FF;
+		border: none;
+		outline: none;
+		cursor: pointer;
+	}
+}

@@ -63,7 +63,7 @@ const letterGradeRegex = /COM|[A-F][+-]?/;
  * 
  * @param file File object from file input.
  */
-const parse = (file) => (
+export const parse = (file) => (
 	new Promise((resolve, reject) => {
 		const fileReader = new FileReader();
 
@@ -80,18 +80,18 @@ const parse = (file) => (
 						return textContent.items.map((s) => s.str).join("");
 					})());
 				};
-		
+
 				const text = await Promise.all(pagePromises);
-		
+
 				// Split into separate semesters.
 				const semestersTexts = text
 					.join()
 					.split(semesterDelimiterRegex)
 					.filter((section) => section !== "Spring\/Summer" && section !== "Fall" && section !== "Winter");
-		
+
 				// The first value from splitting is not a semester.
 				semestersTexts.shift();
-		
+
 				// This section extracts information for each semester.
 				const semesters = [];
 				semestersTexts.forEach((semester) => {
@@ -99,21 +99,21 @@ const parse = (file) => (
 					const courseNames = [];
 			
 					let execResult = [];
-		
 					while ((execResult = gradesRegex.exec(semester)) !== null) {
 						gradesInfos.push(execResult[0]);
 					}
-		
 					while ((execResult = courseNameRegex.exec(semester)) !== null) {
 						courseNames.push(execResult[0]);
 					}
-		
+
 					semesters.push({
 						coursesWithGrades: courseNames.map((courseName, index) => {
 							const gradeInfo = gradesInfos[index];
 							return {
 								course: courseName,
-								grade: gradeInfo ? letterGradeRegex.exec(gradeInfo)[0] : null,
+								grade: gradeInfo && weightAchievedRegex.exec(gradeInfo)[0] === weightPossibleRegex.exec(gradeInfo)[0]
+									? letterGradeRegex.exec(gradeInfo)[0]
+									: null,
 								weightAchieved: gradeInfo ? weightAchievedRegex.exec(gradeInfo)[0] : "0.00",
 								weightPossibleRegex: gradeInfo ? weightPossibleRegex.exec(gradeInfo)[0] : "0.00"
 							}
@@ -130,11 +130,3 @@ const parse = (file) => (
 		fileReader.readAsArrayBuffer(file);
 	})
 )
-
-const runner = async () => {
-	const selectedFile = document.getElementById("transcript-input").files[0];
-	const semesters = await parse(selectedFile);
-	console.log(semesters);
-}
-
-window.runner = runner;

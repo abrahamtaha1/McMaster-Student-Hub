@@ -1,0 +1,27 @@
+.FormInputsWrapper {
+    display: flex;
+    flex-direction: column;
+    margin-left: auto;
+    margin-right: auto;
+    width: 60vw;
+}
+
+.InputWrapper {
+    margin-top: 0.5rem;
+
+}
+
+.FormInput {
+    margin-left: 0.5rem;
+}
+
+.FormWrapper {
+    text-align: center;
+}
+
+.SubmitButton {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1rem;
+    width: 20vw;
+}
