@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import './Reviews.css';
 
 const Reviews = () => {
     const [results, setResults] = useState({
         data: []
     });
+
     const makeRequest = async () => {
         const res = await (await fetch('http://localhost:3001/reviews')).json();
         setResults({

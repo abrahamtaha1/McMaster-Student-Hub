@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
-import { parse } from '../../shared/parser'
+import { parse } from '../../shared/parser';
+import './LandingPage.css';
 
 const LandingPage = ({sharedData, setSharedData}) => {
 	const handleFileInput = async (e) => {
