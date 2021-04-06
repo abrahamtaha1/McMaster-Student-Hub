@@ -56,7 +56,7 @@ const FinancialCalculator = () => {
 							onChange={event => setFormData({
 								...formData,
 								nominalInterest: parseFloat(event.target.value)
-							})} />
+							})} />%
 					</label>
 					<label className='InputWrapper'>
 						Monthly Loan Payment
