@@ -45,7 +45,6 @@ const GPACalculator = ({sharedData, setSharedData}) => {
 		let GPAlist = [];
 		let scale = formData.gradeScale;
 		let errormsg = false;
-		console.log(scale);
 		if (!sharedData.transcript || !sharedData.transcript.length) {
 			errormsg = true;
 			setSharedData({
