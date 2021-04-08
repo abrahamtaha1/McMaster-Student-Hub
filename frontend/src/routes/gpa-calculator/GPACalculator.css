@@ -1,0 +1,30 @@
+@import "https://fonts.googleapis.com/css?family=IBM+Plex+Sans+Condensed|IBM+Plex+Sans:400,600&display=swap";
+
+.GPAFormInputsWrapper {
+    display: flex;
+    flex-direction: column;
+    margin-left: auto;
+    margin-right: auto;
+    width: 60vw;
+}
+
+.GPAInputWrapper {
+    margin-top: 0.5rem;
+}
+
+.GPAFileWrapper {
+    margin-left: 4.0rem;
+    margin-top: 1.0rem;
+}
+
+.GPAFormInput {
+    margin-left: 0.5rem;
+    width: 5vw;
+}
+
+.GPASubmitButton {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1rem;
+    width: 10vw;
+}
