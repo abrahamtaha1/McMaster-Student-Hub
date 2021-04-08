@@ -16,7 +16,7 @@ import Reviews from './routes/reviews/Reviews';
 const App = () => {
 	const [sharedData, setSharedData] = useState({
 		transcript: null,
-		GPA: 0
+		GPA: null
 	});
 
 	return (
