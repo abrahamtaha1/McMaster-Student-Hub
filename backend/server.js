@@ -5,6 +5,13 @@ const cors = require("cors");
 const app = express();
 const port = 3001;
 
+const programPrerequisites = {
+    "Software eng": {
+        "cummulative-grade": 12,
+        "courses": [{ "coursename": "Math 1ZA3", "grade": null }]
+    }
+}
+
 app.use(cors());
 app.use(bodyParser.json());
 
@@ -13,7 +20,7 @@ app.get('/reviews', (req, res) => {
 });
 
 app.post('/program-prerequisites', (req, res) => {
-    res.send({ givenProgramName: `${req.body.program} (Change this server response!)` })
+    res.send({ givenProgramName: `${JSON.stringify(programPrerequisites[req.body.program])} (Change this server response!)` })
 });
 
 app.listen(port, () => {
