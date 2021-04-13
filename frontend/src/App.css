@@ -6,14 +6,13 @@ li {
 	list-style-type: none;
 	margin: 0 2vw;
 	font-size: 3vh;
-	font-family: monospace;
 	padding: 2vw;
-	color: black;
+	color: #ffffff;
 	font-size: 1rem
 }
 
 li:hover {
-	background-color: #C6E9FF;
+	background-color:#940049;
 }
 
 a {
@@ -22,7 +21,8 @@ a {
 
 nav {
 	width: 100vw;
-	background-color: #D6EFFF;
+	color: #ffffff;
+	background-color: #7a003c;
 }
 
 ul {
