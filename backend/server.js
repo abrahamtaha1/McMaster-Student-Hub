@@ -1,5 +1,9 @@
 const express = require('express');
-const {google} = require('googleapis');
+const { google } = require('googleapis');
+const auth = new google.auth.GoogleAuth({
+    keyFile: 'credentials.json',
+    scopes: ['https://www.googleapis.com/auth/spreadsheets']
+});
 const bodyParser = require('body-parser');
 const cors = require("cors");
 
@@ -18,28 +22,23 @@ app.use(bodyParser.json());
 
 app.get('/reviews', async (req, res) => {
 
-    const auth = new google.auth.GoogleAuth({
-        keyFile: 'credentials.json',
-        scopes: ['https://www.googleapis.com/auth/spreadsheets']
-    });
-
     // Create client instance for auth
     const client = await auth.getClient();
 
     // Instance of Google Sheets API
     const googleSheets = google.sheets({version: "v4", auth: client});
 
-    const spreadsheetID = "1f-JWwRH9WQTsnzfokknd1jmiuPH-TR0trMLQhFhpsRA";
+    const spreadsheetId = "1f-JWwRH9WQTsnzfokknd1jmiuPH-TR0trMLQhFhpsRA";
 
     // Get metadata about spreadsheet
     const metaData = await googleSheets.spreadsheets.get({
         auth,
-        spreadsheetID,
+        spreadsheetId,
     })
 
 
 
-    res.send(metaData);
+    res.send(metaData.data);
 });
 
 app.post('/program-prerequisites', (req, res) => {
