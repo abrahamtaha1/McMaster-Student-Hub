@@ -78,7 +78,7 @@ const MEng = [
 app.use(cors());
 app.use(bodyParser.json());
 
-app.get('/reviews', async (req, res) => {
+app.post('/reviews', async (req, res) => {
 
     // Create client instance for auth
     const client = await auth.getClient();
@@ -99,10 +99,16 @@ app.get('/reviews', async (req, res) => {
         auth,
         spreadsheetId,
         range: "Form Responses 1"
-    })
+    });
 
-    res.send(getRows.data); //ALSO TEST
-    console.log(getRows.data) //testing purposes REMOVE later
+    const filters = req.body;
+
+    res.send(getRows.data.values.slice(1, getRows.data.values.length - 1).filter(
+        (row) => filters.maxPrice !== null ? row[2] <= filters.maxPrice : true
+            && filters.minLandlordScore !== null ? row[3] >= filters.minLandlordScore : true
+            && filters.maxRoomates !== null ? row[4] <= filters.maxRoomates : true
+            && filters.minRating !== null ? row[5] >= filters.minRating : true
+    ));
 });
 
 app.post('/program-prerequisites', (req, res) => {

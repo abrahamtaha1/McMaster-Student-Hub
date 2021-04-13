@@ -5,7 +5,7 @@ import './Reviews.css';
 const columns = [
     { field: 'timeStamp', headerName: 'Time Stamp', width: 200 },
     { field: 'propertyAddress', headerName: 'Property Address', width: 200 },
-    { field: 'monthyRent', headerName: 'Monthy Rent', width: 200 },
+    { field: 'monthlyRent', headerName: 'Monthy Rent', width: 200 },
     { field: 'landlordScore', headerName: 'Landlord Score', width: 200 },
     { field: 'numberOfRoomates', headerName: 'Number Of Roomates', width: 200 },
     { field: 'overallPropertyRating', headerName: 'Overall Property Rating', width: 200 },
@@ -21,16 +21,29 @@ const Reviews = () => {
         maxRoomates: null
 	});
 
+    const [formData, setFormData] = useState({
+        maxPrice: null,
+        minLandlordScore: null,
+        minRating: null,
+        maxRoomates: null
+    });
+
     const makeRequest = async () => {
-        const res = await (await fetch('http://localhost:3001/reviews')).json();
-        const resValues = res.values;
-        resValues.shift()
+        const requestOptions = {
+			method: 'POST',
+			Accept: 'application/json',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(formData)
+		};
+
+		const resValues = await (await fetch('http://localhost:3001/reviews', requestOptions)).json();
         const rows = resValues
+        console.log(rows)
         setTableData(rows.map((row, index) => ({
             id: index,
             timeStamp: row[0],
             propertyAddress: row[1],
-            montlyRent: row[2],
+            monthlyRent: row[2],
             landlordScore: row[3],
             numberOfRoomates: row[4],
             overallPropertyRating: row[5]
@@ -40,9 +53,68 @@ const Reviews = () => {
 	return (
 		<div>
 			<h1>Property Reviews</h1>
-            <button onClick={() => { makeRequest() }}>Make a test request</button>
+            <form>
+				<div className='FormInputsWrapper'>
+					<label className='InputWrapper'>
+						Maximum rent price
+						<input
+							type='number'
+                            min={0}
+							step='0.01'
+							className='FormInput'
+							value={formData.maxPrice}
+							onChange={event => setFormData({
+								...formData,
+								maxPrice: parseFloat(event.target.value)
+							})} />
+					</label>
+                    <label className='InputWrapper'>
+						Minimum landlord score
+						<input
+							type='number'
+							step='0.01'
+                            min={0}
+                            max={5}
+							className='FormInput'
+							value={formData.minLandlordScore}
+							onChange={event => setFormData({
+								...formData,
+								minLandlordScore: parseFloat(event.target.value)
+							})} />
+					</label>
+                    <label className='InputWrapper'>
+						Minimum rating
+						<input
+							type='number'
+							step='0.01'
+                            min={0}
+                            max={5}
+							className='FormInput'
+							value={formData.minRating}
+							onChange={event => setFormData({
+								...formData,
+								minRating: parseFloat(event.target.value)
+							})} />
+					</label>
+                    <label className='InputWrapper'>
+						Maximum number of roommates
+						<input
+							type='number'
+							step='0.01'
+                            min={0}
+                            max={10}
+							className='FormInput'
+							value={formData.maxRoomates}
+							onChange={event => setFormData({
+								...formData,
+								maxRoomates: parseFloat(event.target.value)
+							})} />
+					</label>
+				</div>
+			</form>
+            <button  className='SubmitButton'  onClick={() => { makeRequest() }}>Get property metrics</button>
             <div style={{ height: 400, width: '100%' }}>
-                <DataGrid rows={tableData} columns={columns} pageSize={5} checkboxSelection />
+                { tableData.length !== 0 && <DataGrid rows={tableData} columns={columns} pageSize={5} checkboxSelection /> }
             </div>
 		</div>
 	);
