@@ -42,8 +42,8 @@ const FinancialCalculator = () => {
 		while (totalOutstandingLoan - formData.loanPayment > 0) {
 			totalOutstandingLoan -= formData.loanPayment;
 			const displayedOutstandingLoan = totalOutstandingLoan;
-			totalOutstandingLoan += displayedOutstandingLoan*(effectiveInterest / 100);
-			interestAccrued += displayedOutstandingLoan*(effectiveInterest / 100);
+			totalOutstandingLoan += displayedOutstandingLoan*(effectiveInterest);
+			interestAccrued += displayedOutstandingLoan*(effectiveInterest);
 			if (currentMonth % 6 === 0) {
 				chartData.push({
 					"group": "Outstanding Loan",
@@ -86,6 +86,7 @@ const FinancialCalculator = () => {
 		var effectiveInterest = (Math.pow((1 + ((formData.nominalInterest)/100)/365), 30.42) - 1);
 		if ((formData.loanPayment - formData.outstandingLoan*effectiveInterest) <= 0) {
 			setDisplayedPayback({...displayedPayback, years: null, months: null});
+			setChartData([]);
 			setCannotPayBack(true);
 		} else {
 			setCannotPayBack(null);
