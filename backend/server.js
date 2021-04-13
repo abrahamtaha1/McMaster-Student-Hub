@@ -103,11 +103,13 @@ app.post('/reviews', async (req, res) => {
 
     const filters = req.body;
 
+    console.log(getRows.data.values)
+
     res.send(getRows.data.values.slice(1, getRows.data.values.length - 1).filter(
-        (row) => filters.maxPrice !== null ? row[2] <= filters.maxPrice : true
-            && filters.minLandlordScore !== null ? row[3] >= filters.minLandlordScore : true
-            && filters.maxRoomates !== null ? row[4] <= filters.maxRoomates : true
-            && filters.minRating !== null ? row[5] >= filters.minRating : true
+        (row) => ((filters.maxPrice !== null ? parseInt(row[2]) <= filters.maxPrice : true)
+            && (filters.minLandlordScore !== null ? parseInt(row[3]) >= filters.minLandlordScore : true)
+            && (filters.maxRoomates !== null ? parseInt(row[4]) <= filters.maxRoomates : true)
+            && (filters.minRating !== null ? parseInt(row[5]) >= filters.minRating : true))
     ));
 });
 
