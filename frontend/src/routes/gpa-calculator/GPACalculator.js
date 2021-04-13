@@ -76,7 +76,7 @@ const GPACalculator = ({sharedData, setSharedData}) => {
 				semesterSum += parseFloat(course.weightAchieved);
 			}
 			if (semesterSum > 0)
-				GPAlist.push({group: "Semster GPA", key: "Semester " + (i+1), value: (semesterAchieved/semesterSum).toFixed(2)});
+				GPAlist.push({ group: "Semester " + (i+1), key: "Semester " + (i+1), value: (semesterAchieved/semesterSum).toFixed(2) });
 			semesterAchieved = 0;
 			semesterSum = 0;
 		}
@@ -101,14 +101,14 @@ const GPACalculator = ({sharedData, setSharedData}) => {
 				title: "GPA Bar Chart",
 				axes: {
 					bottom: {
-					title: "Semester",
-					mapsTo: "key",
-					scaleType: "labels"
+						title: "Semester",
+						mapsTo: "key",
+						scaleType: "labels"
 					},
 					left: {
-					mapsTo: "value",
-					title: "Average GPA",
-					scaleType: "linear"
+						mapsTo: "value",
+						title: "Average GPA",
+						scaleType: "linear"
 					}
 				},
 				height: "400px"
