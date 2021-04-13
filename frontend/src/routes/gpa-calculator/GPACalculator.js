@@ -56,19 +56,22 @@ const GPACalculator = ({sharedData, setSharedData}) => {
 		else	errormsg = false;
 		if(!n)
 			n = allCourses(sharedData.transcript);
-
 		for (let i = sharedData.transcript.length - 1; i >= 0; i--) {
 			if (n <= 0)	break;
 			for (let course of sharedData.transcript[i].coursesWithGrades) {
 				if (n <= 0)	break;
 				if (course.grade !== null && course.grade !== "COM") {
 					if (scale == 12.0) {
-						achieved += letter2point12[course.grade] * parseFloat(course.weightAchieved);
-						semesterAchieved += letter2point12[course.grade] * parseFloat(course.weightAchieved);
+						if (course.weightAchieved > 0){
+							achieved += letter2point12[course.grade] * parseFloat(course.weightAchieved);
+							semesterAchieved += letter2point12[course.grade] * parseFloat(course.weightAchieved);
+						}
 					}
 					else {
+						if (course.weightAchieved > 0){
 						achieved += letter2point4[course.grade] * parseFloat(course.weightAchieved);
 						semesterAchieved += letter2point4[course.grade] * parseFloat(course.weightAchieved);
+						}
 					}
 					n -= 1;
 				}
