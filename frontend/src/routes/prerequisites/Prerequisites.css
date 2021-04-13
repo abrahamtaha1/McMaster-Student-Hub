@@ -7,3 +7,12 @@
     margin-right: auto;
     width: 60vw;
 }
+
+.Results {
+    border: 0.2px solid black;
+    color: #000000
+}
+
+.Results:hover {
+    background-color:#e9e9e9;
+}

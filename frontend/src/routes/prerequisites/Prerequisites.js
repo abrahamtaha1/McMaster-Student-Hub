@@ -127,7 +127,7 @@ const Prerequisites = ({sharedData, setSharedData}) => {
 				Check program requirements
 			</button>
 			<h3>{gpaDisplay}</h3>
-			<h3>Prerequisite needed: { prereqNeeded.map((el) => <li key={el}>{el}</li>) }</h3>
+			<h3>Prerequisite needed: { prereqNeeded.map((el) => <li className="Results" key={el}>{el}</li>) }</h3>
 		</div>
 	);
 }
