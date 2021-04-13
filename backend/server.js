@@ -36,9 +36,15 @@ app.get('/reviews', async (req, res) => {
         spreadsheetId,
     })
 
+    // Read rows
+    const getRows = await googleSheets.spreadsheets.values.get({
+        auth,
+        spreadsheetId,
+        range: "Form Responses 1"
+    })
 
-
-    res.send(metaData.data);
+    res.send(getRows.data); //ALSO TEST
+    console.log(getRows.data) //testing purposes REMOVE later
 });
 
 app.post('/program-prerequisites', (req, res) => {

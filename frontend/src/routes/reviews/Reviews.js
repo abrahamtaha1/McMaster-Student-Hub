@@ -6,6 +6,13 @@ const Reviews = () => {
         data: []
     });
 
+    const [filterData, setFilterData] = useState({
+		maxPrice: null,
+		minScore: null,
+		minRating: null,
+        maxRoomates: null
+	});
+
     const makeRequest = async () => {
         const res = await (await fetch('http://localhost:3001/reviews')).json();
         setResults({
