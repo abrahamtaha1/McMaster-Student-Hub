@@ -20,6 +20,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "concurrently": "^6.0.0"
+    "concurrently": "^6.0.0",
+    "google-auth-library": "^7.0.4",
+    "googleapis": "^71.0.0"
   }
 }

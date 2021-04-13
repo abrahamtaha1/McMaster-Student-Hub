@@ -1,5 +1,21 @@
 import React, { useState } from 'react';
+import { StackedBarChart } from "@carbon/charts-react";
 import './FinancialCalculator.css';
+
+const chartOptions = {
+	title: "Outstanding loans per month",
+	axes: {
+		left: {
+			mapsTo: "value",
+			stacked: true
+		},
+		bottom: {
+			mapsTo: "key",
+			scaleType: "labels"
+		}
+	},
+	height: "400px"
+};
 
 const FinancialCalculator = () => {
 	const [formData, setFormData] = useState({
@@ -15,6 +31,56 @@ const FinancialCalculator = () => {
 		months: null
 	});
 
+	const [chartData, setChartData] = useState([])
+
+	const generateChartData = () => {
+		let totalOutstandingLoan = formData.outstandingLoan;
+		const effectiveInterest = (Math.pow((1 + ((formData.nominalInterest)/100)/365), 30.42) - 1);
+		const chartData = [];
+		let currentMonth = 1;
+		let interestAccrued = 0;
+		while (totalOutstandingLoan - formData.loanPayment > 0) {
+			totalOutstandingLoan -= formData.loanPayment;
+			const displayedOutstandingLoan = totalOutstandingLoan;
+			totalOutstandingLoan += displayedOutstandingLoan*(effectiveInterest / 100);
+			interestAccrued += displayedOutstandingLoan*(effectiveInterest / 100);
+			if (currentMonth % 6 === 0) {
+				chartData.push({
+					"group": "Outstanding Loan",
+					"value": displayedOutstandingLoan,
+					"key": `Loan-Month-${currentMonth}`
+				})
+				chartData.push({
+					"group": "Montly Payment",
+					"value": formData.loanPayment,
+					"key": `Loan-Month-${currentMonth}`
+				})
+				chartData.push({
+					"group": "Interest Accrued",
+					"value": interestAccrued,
+					"key": `Loan-Month-${currentMonth}`
+				})
+			}
+			currentMonth++;
+		}
+		chartData.push({
+			"group": "Outstanding Loan",
+			"value": totalOutstandingLoan,
+			"key": `Loan-Month-${currentMonth}`
+		})
+		chartData.push({
+			"group": "Montly Payment",
+			"value": formData.loanPayment,
+			"key": `Loan-Month-${currentMonth}`
+		})
+		chartData.push({
+			"group": "Interest Accrued",
+			"value": interestAccrued,
+			"key": `Loan-Month-${currentMonth}`
+		})
+		return chartData;
+	};
+
 	const calculatePayback = (event) => {
 		event.preventDefault();
 		var effectiveInterest = (Math.pow((1 + ((formData.nominalInterest)/100)/365), 30.42) - 1);
@@ -23,9 +89,12 @@ const FinancialCalculator = () => {
 			setCannotPayBack(true);
 		} else {
 			setCannotPayBack(null);
+			setChartData([]);
+			setDisplayedPayback({...displayedPayback, years: null, months: null});
 			var totalMonths = Math.ceil( (Math.log(formData.loanPayment) - Math.log(formData.loanPayment - formData.outstandingLoan * effectiveInterest)) 
 			/ Math.log(1 + effectiveInterest));
 			setDisplayedPayback({...displayedPayback, years: (Math.floor(totalMonths / 12)), months: (totalMonths % 12)});
+			setChartData(generateChartData());
 		}
 	}
 
@@ -77,6 +146,7 @@ const FinancialCalculator = () => {
 				{ displayedPayback.years && <><h3>The calculated payback time is:</h3><p>{displayedPayback.years} yrs {displayedPayback.months} mths</p></> }
 				{ cannotPayBack && <><h3>The loan can not be paid back with this payment amount</h3></> }
 			</div>
+			{ chartData.length && <StackedBarChart data={chartData} options={chartOptions} /> }
 		</div>
 	);
 }

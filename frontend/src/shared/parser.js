@@ -4,14 +4,14 @@ import * as pdfjs from "pdfjs-dist";
 pdfjs.GlobalWorkerOptions.workerSrc = require("pdfjs-dist/build/pdf.worker.entry.js");
 
 // ----------------------------------- REGEX -----------------------------------
-const gradesRegex = /[0-9]+.[0-9]+.\/[0-9]+.[0-9]+(?:Grade)?(COM|[A-F][+-]?)/g;
+const gradesRegex = /[0-9]+.[0-9]+.\/[0-9]+.[0-9]+(?:Grade|,|\s*)?(COM|[A-Z][+-]?)/g;
 // Follow the instructions in `getCoursePrefixes.js` is this needs to be updated/replaced.
 const courseNameRegex = /(ANTHROP|ARABIC|ART|ARTHIST|ARTSSCI|ASTRON|AUTOTECH|BIOCHEM|BIOLOGY|BIOMEDDC|BIOPHYS|BIOSAFE|BIOTECH|CAYUGA|CHEM|CHEMBIO|CHEMENG|CHINESE|CIVENG|CIVTECH|CLASSICS|CMST|CMTYENGA|COLLAB|COMMERCE|COMPENG|COMPSCI|EARTHSC|ECON|ELECENG|ENGINEER|ENGLISH|ENGNMGT|ENGPHYS|ENGSOCTY|ENGTECH|ENRTECH|ENVIRSC|ENVSOCTY|EXPLORE|FARSI|FRENCH|GENTECH|GEOG|GERMAN|GLOBALZN|GREEK|HEBREW|HISTORY|HLTHAGE|HTHSCI|HUMAN|HUMBEHV|IBEHS|IBH|INDIGST|INNOVATE|INSPIRE|INTENG|INUKTUT|ISCI|ITALIAN|JAPANESE|KINESIOL|KOREAN|LABRST|LATIN|LIFESCI|LINGUIST|MANTECH|MATH|MATLS|MECHENG|MECHTRON|MEDPHYS|MEDRADSC|MELD|MIDWIF|MMEDIA|MOHAWK|MOLBIOL|MUSIC|MUSICCOG|NEUROSCI|NURSING|OJIBWE|PEACEST|PHARMAC|PHILOS|PHYSICS|PNB|POLISH|POLSCI|PROCTECH|PSYCH|RELIGST|RUSSIAN|SANSKRIT|SCAR|SCICOMM|SCIENCE|SEP|SFWRENG|SFWRTECH|SMRTTECH|SOCIOL|SOCPSY|SOCSCI|SOCWORK|SPANISH|STATS|SUSTAIN|THTRFLM|WHMIS|WOMENST)\s?[A-Z0-9]{4}/g;
 // The best delimiter I found goes by the pattern ``--- ${yearNumber} ${season} ---`.
 // I know it's hacky I'm open to better options.
 const semesterDelimiterRegex = /---\s?[0-9]{4}\s?(Spring\/Summer|Fall|Winter)\s?---/g;
-const weightAchievedRegex = /[0-9]+.[0-9]+[^/]+/;
-const weightPossibleRegex = /(?<=\/)[0-9]+.[0-9]+/; // NOTE: Positive lookbehind may not be supported in all browsers!
+const weightAchievedRegex = /(?<=\/)[0-9]+.[0-9]+/; // NOTE: Positive lookbehind may not be supported in all browsers!
+const weightPossibleRegex = /[0-9]+.[0-9]+(?=\/)/; // NOTE: Positive lookahead may not be supported in all browsers!
 const letterGradeRegex = /COM|[A-F][+-]?/;
 // -----------------------------------------------------------------------------
 
@@ -115,7 +115,7 @@ export const parse = (file) => (
 									? letterGradeRegex.exec(gradeInfo)[0]
 									: null,
 								weightAchieved: gradeInfo ? weightAchievedRegex.exec(gradeInfo)[0] : "0.00",
-								weightPossibleRegex: gradeInfo ? weightPossibleRegex.exec(gradeInfo)[0] : "0.00"
+								weightPossible: gradeInfo ? weightPossibleRegex.exec(gradeInfo)[0] : "0.00"
 							}
 						})
 					});
