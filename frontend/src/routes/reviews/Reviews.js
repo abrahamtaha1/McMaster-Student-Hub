@@ -54,6 +54,10 @@ const Reviews = () => {
 		<div>
 			<h1>Property Reviews</h1>
             <form>
+				<p>
+					<a href="https://docs.google.com/forms/d/e/1FAIpQLScZHp0KeYd8uIO4NhzDP1lTy6Hbrw1LBklOr0HsXNMuRiA4aw/viewform?usp=sf_link">Click Here </a>
+					to submit your own property review.
+				</p>
 				<div className='FormInputsWrapper'>
 					<label className='InputWrapper'>
 						Maximum rent price
