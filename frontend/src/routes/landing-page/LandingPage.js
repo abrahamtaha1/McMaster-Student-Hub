@@ -8,7 +8,7 @@ const LandingPage = ({sharedData, setSharedData}) => {
 			<div class="row">
   <div class="column" style = {{backgroundColor: "#F5F5DC"}}>
     <h1>GPA Calculator </h1>
-    <p>Using your McMaster transscript, quickly 
+    <p>Using your McMaster transcript, quickly 
 		calculate your cGPA with ease. 
 	</p>
 
