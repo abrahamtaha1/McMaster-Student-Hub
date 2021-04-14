@@ -1,0 +1,18 @@
+.column {
+    float: left;
+    width: 25%;
+    border-right: 1px solid black;
+    height: 220px;
+  }
+  
+  /* Clear floats after the columns */
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+  h1 {
+    color: #7a003c;
+    font-size: large;
+  }
